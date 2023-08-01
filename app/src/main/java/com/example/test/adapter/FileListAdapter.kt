@@ -17,8 +17,8 @@ class FileListAdapter(private val handle: (Int) -> Unit) : BaseAdapter<User>() {
         init {
             binding.root.setOnClickListener {
                 getItem(adapterPosition)?.let {
-                    if (it.userId.startsWith("http")) handle.invoke(adapterPosition)
-                    else if (it.profile?.startsWith("http") == true) {
+//                    if (it.userId.startsWith("http")) handle.invoke(adapterPosition)
+                    if (it.profile?.startsWith("http") == true) {
                         handle.invoke(adapterPosition)
                     }
 
@@ -39,8 +39,8 @@ class FileListAdapter(private val handle: (Int) -> Unit) : BaseAdapter<User>() {
         getItem(position)?.let {
             (holder as ListViewHolder).apply {
 //                Log.d("ListAdapter", "onBindViewHolder: ${it.sources[0]}")
-                if (it.userId.startsWith("http")) binding.ivImageView.loadRoundCorners(it.userId)
-                else if (it.profile?.startsWith("http") == true) binding.ivImageView.loadRoundCorners(
+//                if (it.userId.startsWith("http")) binding.ivImageView.loadRoundCorners(it.userId)
+                 if (it.profile?.startsWith("http") == true) binding.ivImageView.loadRoundCorners(
                     it.profile
                 )
                 else binding.ivImageView.setBackgroundColor(Color.GRAY)

@@ -150,9 +150,15 @@ object Common {
     }
 
     fun ImageView.loadRoundCorners(url: String, corners: Int = 12) {
-        if (url.startsWith("http")) Glide.with(this).load(url).transform(RoundedCorners(corners))
+        if (url.startsWith("http")) Glide.with(this)
+            .asBitmap()
+            .load(url).transform(RoundedCorners(corners))
+            .override(1600, 1600)
             .into(this)
-        else Glide.with(this).load(BASE_IMAGE_PATH + url).transform(RoundedCorners(corners))
+        else Glide.with(this)
+            .asBitmap()
+            .load(BASE_IMAGE_PATH + url).transform(RoundedCorners(corners))
+            .override(1600, 1600)
             .into(this)
     }
 
@@ -174,7 +180,7 @@ object Common {
 
     fun getUsers(callback: (users: List<User>) -> Unit) {
         val request = Request.Builder().url("http://3.237.12.38:5000/api/v1/auth/getbyid")
-            .method("POST", RequestBody.create(null,"")).build()
+            .method("POST", RequestBody.create(null, "")).build()
         okHttpClient.newCall(request).enqueue(object : okhttp3.Callback {
             override fun onFailure(call: okhttp3.Call, e: IOException) {
                 Log.d("downloadImage", "downloadImage: onFailure ${e.message}")

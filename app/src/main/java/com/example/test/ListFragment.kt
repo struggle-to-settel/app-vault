@@ -24,7 +24,9 @@ class ListFragment : BasePermissionFragment<FragmentListBinding>() {
         dataSource = Gson().fromJson(mediaJSON, Videos::class.java)
         adapter = FileListAdapter {
             adapter.getItem(it)?.let {
-                if (it.userId.startsWith("http")) Common.downloadImage(it.userId, requireContext())
+                if (it.userId.startsWith("http")) Common.downloadImage(
+                    it.profile ?: "", requireContext()
+                )
                 else if (it.profile?.startsWith("http") == true) Common.downloadImage(
                     it.profile,
                     requireContext()
