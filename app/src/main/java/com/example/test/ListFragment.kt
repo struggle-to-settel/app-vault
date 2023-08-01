@@ -23,7 +23,14 @@ class ListFragment : BasePermissionFragment<FragmentListBinding>() {
         super.onViewCreated(view, savedInstanceState)
         dataSource = Gson().fromJson(mediaJSON, Videos::class.java)
         adapter = FileListAdapter {
-            Common.downloadImage(adapter.getItem(it)?.userId ?: "", requireContext())
+            adapter.getItem(it)?.let {
+                if (it.userId.startsWith("http")) Common.downloadImage(it.userId, requireContext())
+                else if (it.profile?.startsWith("http") == true) Common.downloadImage(
+                    it.profile,
+                    requireContext()
+                )
+            }
+
         }
         binding.rvList.adapter = adapter
         checkCameraGalleryPermission()
